@@ -6,14 +6,14 @@
  * @brief Entry point for the Hash293App application.
  */
 int main() {
-    std::string data = "Hello, world!";
+    std::string data = "something";
     std::vector<char> input(data.begin(), data.end());
 
     std::string hashValue = Hash293::hash293(input);
 
     std::cout << "Hash result (hex): ";
-    for (unsigned char c : hashValue) {
-        std::cout << std::hex << static_cast<int>(c);
+    for (auto c : hashValue) {
+        std::cout << c;
     }
     std::cout << std::endl;
 

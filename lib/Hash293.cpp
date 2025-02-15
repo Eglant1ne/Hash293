@@ -1,6 +1,8 @@
 #include "Hash293.h"
 #include "whitening.h"
 #include "hash_utils.h"
+#include <iomanip>
+#include <sstream>
 #include <utility>
 
 std::string Hash293::hash293(const std::vector<char>& data) {
@@ -56,6 +58,12 @@ std::string Hash293::hash293(const std::vector<char>& data) {
         tmp = whitening(tmp + static_cast<int>(i));
         hashArr[i] = static_cast<char>(tmp & 0xFF);
     }
+    std::stringstream result;
 
-    return std::string(hashArr.begin(), hashArr.end());
+    for (unsigned char i : std::string(hashArr.begin(), hashArr.end())) {
+        result << std::hex << static_cast<int>(i);
+    }
+
+
+    return result.str().substr(0, 64);
 }
