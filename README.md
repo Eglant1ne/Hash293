@@ -23,7 +23,7 @@ pacman -S mingw-w64-x86_64-gtest
 ## Сборка и запуск
 1. Клонируйте репозиторий:
    ```sh
-   git clone https://github.com/your-repo/Hash293.git
+   git clone https://github.com/Eglant1ne/Hash293.git
    cd Hash293
    ```
 2. Создайте директорию сборки и перейдите в неё:
