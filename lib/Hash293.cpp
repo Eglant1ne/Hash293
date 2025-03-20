@@ -30,7 +30,7 @@ std::string Hash293::hash293(const std::vector<char>& data) {
     std::vector<int> prev;
     prev.reserve(v.size());
     for (size_t i = 0; i < v.size(); ++i) {
-        prev.push_back(whitening(v[i] + salt + static_cast<int>(i)));
+        prev.emplace_back(whitening(v[i] + salt + static_cast<int>(i)));
     }
 
     while (prev.size() > 64) {
@@ -38,9 +38,9 @@ std::string Hash293::hash293(const std::vector<char>& data) {
         temp.reserve(prev.size() / 2);
         for (size_t j = 0; j < prev.size(); j += 2) {
             if (j + 1 < prev.size()) {
-                temp.push_back(whitening(prev[j] + prev[j + 1]));
+                temp.emplace_back(whitening(prev[j] + prev[j + 1]));
             } else {
-                temp.push_back(whitening(prev[j]));
+                temp.emplace_back(whitening(prev[j]));
             }
         }
         prev = std::move(temp);
@@ -50,7 +50,7 @@ std::string Hash293::hash293(const std::vector<char>& data) {
     hashArr.reserve(prev.size());
     for (size_t i = 0; i < prev.size(); ++i) {
         int mixed = whitening(prev[i] * static_cast<int>(i + 1));
-        hashArr.push_back(static_cast<char>(mixed & 0xFF));
+        hashArr.emplace_back(static_cast<char>(mixed & 0xFF));
     }
 
     for (size_t i = 0; i < hashArr.size(); ++i) {
