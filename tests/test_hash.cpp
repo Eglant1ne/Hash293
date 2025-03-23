@@ -9,7 +9,7 @@
  */
 TEST(Hash293Test, BasicHash) {
     std::vector<char> input = {'H', 'e', 'l', 'l', 'o'};
-    std::string hashResult = Hash293::hash293(input);
+    std::vector<char> hashResult = Hash293::hash293(input);
     EXPECT_FALSE(hashResult.empty());
 }
 
@@ -18,7 +18,7 @@ TEST(Hash293Test, BasicHash) {
  */
 TEST(Hash293Test, EmptyInput) {
     std::vector<char> input;
-    std::string hashResult = Hash293::hash293(input);
+    std::vector<char> hashResult = Hash293::hash293(input);
     EXPECT_FALSE(hashResult.empty());
 }
 
@@ -28,8 +28,9 @@ TEST(Hash293Test, EmptyInput) {
 TEST(Hash293Test, SameInputProducesSameHash) {
     std::string s = "Same input";
     std::vector<char> input(s.begin(), s.end());
-    std::string hash1 = Hash293::hash293(input);
-    std::string hash2 = Hash293::hash293(input);
+    std::vector<char> result = Hash293::hash293(input);
+    std::string hash1 = Hash293::toString(result);
+    std::string hash2 = Hash293::toString(result);
     EXPECT_EQ(hash1, hash2);
 }
 
@@ -41,8 +42,10 @@ TEST(Hash293Test, DifferentInputProducesDifferentHash) {
     std::string s2 = "Hello worle"; // small difference
     std::vector<char> input1(s1.begin(), s1.end());
     std::vector<char> input2(s2.begin(), s2.end());
-    std::string hash1 = Hash293::hash293(input1);
-    std::string hash2 = Hash293::hash293(input2);
+    std::vector<char> input1_hash = Hash293::hash293(input1);
+    std::vector<char> input2_hash = Hash293::hash293(input2);
+    std::string hash1 = Hash293::toString(input1_hash);
+    std::string hash2 = Hash293::toString(input2_hash);
     EXPECT_NE(hash1, hash2);
 }
 
@@ -52,7 +55,8 @@ TEST(Hash293Test, DifferentInputProducesDifferentHash) {
 TEST(Hash293Test, LargeInput) {
     std::vector<char> bigData(1'000'000, 'A');
     std::string hashResult;
-    ASSERT_NO_THROW(hashResult = Hash293::hash293(bigData));
+    std::vector<char> hash = Hash293::hash293(bigData);
+    ASSERT_NO_THROW(hashResult = Hash293::toString(hash));
     EXPECT_FALSE(hashResult.empty());
 }
 
@@ -68,6 +72,6 @@ TEST(Hash293Test, RandomData) {
         c = static_cast<char>(dist(rng));
     }
 
-    std::string hashResult = Hash293::hash293(randomData);
+    std::vector<char> hashResult = Hash293::hash293(randomData);
     EXPECT_FALSE(hashResult.empty());
 }

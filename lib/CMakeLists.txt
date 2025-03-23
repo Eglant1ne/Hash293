@@ -2,7 +2,6 @@
 
 add_library(Hash293Lib STATIC
     Hash293.cpp
-    whitening.cpp
     hash_utils.cpp
 )
 
