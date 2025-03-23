@@ -11,6 +11,6 @@
  */
 void fill_vector(std::vector<char>& v, int add) {
     for (int i = 0; i < add; ++i) {
-        v.push_back(static_cast<char>(i % 256));  // Example padding pattern
+        v.emplace_back(static_cast<char>(i % 256));
     }
 }

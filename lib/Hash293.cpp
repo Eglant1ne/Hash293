@@ -12,7 +12,6 @@ std::string Hash293::toString(std::vector<char>& data) {
 }
 
 
-
 std::vector<char> Hash293::hash293(std::vector<char>& data) {
     int len = data.size();
 
