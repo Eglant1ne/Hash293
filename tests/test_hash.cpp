@@ -28,9 +28,9 @@ TEST(Hash293Test, EmptyInput) {
     int inputSize = strlen(input);
 
     char* hashResult = Hash293::hash293(input, inputSize);
-    EXPECT_NE(hashResult, nullptr); // Проверяем, что хэш не пустой
+    EXPECT_NE(hashResult, nullptr);
 
-    delete[] hashResult; // Освобождаем память
+    delete[] hashResult;
 }
 
 /**
