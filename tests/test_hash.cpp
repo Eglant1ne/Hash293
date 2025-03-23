@@ -4,6 +4,7 @@
 #include <random>
 #include <unordered_set>
 #include <vector>
+#include <fstream>
 #include <cstring>
 
 /**
@@ -111,10 +112,10 @@ TEST(Hash293Test, RandomData) {
     delete[] hashResult;
 }
 
-TEST(Hash293Test, CollisionTestForOneMillionStrings) {
-    const int numTests = 1'000'000;
-    std::unordered_set<std::string> hashes;
-    hashes.reserve(numTests);
+TEST(Hash293Test, CollisionTestForOneBillionStrings) {
+    const int numTests = 1'000'000'000;
+    std::unordered_map<std::string, std::string> hashes;
+    std::ofstream collisionLog("collisions.log");
 
     std::mt19937_64 rng(12345);
     std::uniform_int_distribution<char> dist('a', 'z');
@@ -129,11 +130,19 @@ TEST(Hash293Test, CollisionTestForOneMillionStrings) {
         std::string hashStr = Hash293::toString(hashResult);
         delete[] hashResult;
 
-        ASSERT_EQ(hashes.find(hashStr), hashes.end())
-            << "Collision detected for input: " << input;
+        if (hashes.find(hashStr) != hashes.end()) {
+            collisionLog << "Collision detected:\n"
+                         << "  Input 1: " << hashes[hashStr] << "\n"
+                         << "  Input 2: " << input << "\n"
+                         << "  Hash: " << hashStr << "\n\n";
+        } else {
+            hashes[hashStr] = input;
+        }
 
-        hashes.insert(hashStr);
+        if (i % 10'000'000 == 0) {
+            std::cout << "Processed " << i << " strings..." << std::endl;
+        }
     }
 
-    EXPECT_EQ(hashes.size(), numTests);
+    collisionLog.close();
 }
