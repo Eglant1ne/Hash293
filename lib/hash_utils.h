@@ -24,11 +24,17 @@ constexpr int rotl(int value, int shift) {
  * with prime numbers and a left rotation to increase diffusion.
  *
  * @param x The input integer to transform.
+ * @param index The index of x
  * @return The transformed integer.
  */
-constexpr int whitening(int x) {
-    return rotl((x ^ (x >> 3) ^ (x << 7)) * 0x45d9f3b, 13) ^ ((x >> 5) ^ (x << 11));
+constexpr int whitening(int x, int index) {
+    constexpr int prime = 0x45d9f3b;
+    x ^= (x >> 16);  
+    x *= prime;
+    x ^= (x >> 16);
+    return rotl(x + (index * 31), index % 8);
 }
+
 
 /**
  * @brief Fills a character vector with additional padding.
@@ -39,6 +45,6 @@ constexpr int whitening(int x) {
  * @param v   The vector to be extended.
  * @param add The number of characters to add.
  */
-void fill_vector(std::vector<char>& v, int add);
+void fill_vector(std::vector<char>& v, int add, int block);
 
 #endif // HASH_UTILS_H

@@ -9,8 +9,9 @@
  * @param v   The vector to be extended.
  * @param add The number of characters to add.
  */
-void fill_vector(std::vector<char>& v, int add) {
+void fill_vector(std::vector<char>& v, int add, int block) {
+    v.reserve(v.size() + add);
     for (int i = 0; i < add; ++i) {
-        v.emplace_back(static_cast<char>(i % 256));
+        v.emplace_back(static_cast<char>(whitening(block + i, i)));
     }
 }
