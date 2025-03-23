@@ -1,16 +1,16 @@
 #include "hash_utils.h"
-#include "whitening.h"
 
 /**
- * @details
- * This function reserves additional capacity in the vector
- * to minimize re-allocations, then uses `whitening` to generate
- * pseudo-random filler bytes.
+ * @brief Fills a character vector with additional padding.
+ *
+ * This function appends `add` characters with a predefined pattern
+ * to the end of `v`, ensuring the vector reaches the required length.
+ *
+ * @param v   The vector to be extended.
+ * @param add The number of characters to add.
  */
-void fill_vector(std::vector<char>& v, int add, int salt) {
-    v.reserve(v.size() + add);
+void fill_vector(std::vector<char>& v, int add) {
     for (int i = 0; i < add; ++i) {
-        char filler = static_cast<char>(whitening(salt + i) & 0xFF);
-        v.emplace_back(filler);
+        v.push_back(static_cast<char>(i % 256));  // Example padding pattern
     }
 }

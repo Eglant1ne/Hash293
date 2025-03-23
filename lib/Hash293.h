@@ -3,6 +3,10 @@
 
 #include <vector>
 #include <string>
+#include "hash_utils.h"
+#include <iomanip>
+#include <sstream>
+#include <utility>
 
 /**
  * @class Hash293
@@ -17,9 +21,16 @@ public:
      * @brief Calculates a hash value for the given data.
      *
      * @param data A vector of characters representing the input data.
-     * @return A std::string containing the resulting hash.
+     * @return a vector of characters
      */
-    static std::string hash293(const std::vector<char>& data);
+    static std::vector<char> hash293(std::vector<char>& data);
+    /**
+     * @brief Convert data to string.
+     *
+     * @param data A vector of characters.
+     * @return data vector to string.
+     */
+    static std::string toString(std::vector<char>& data);
 };
 
 #endif // HASH293_H
