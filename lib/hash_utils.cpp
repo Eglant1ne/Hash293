@@ -1,17 +1,14 @@
 #include "hash_utils.h"
 
-/**
- * @brief Fills a character vector with additional padding.
- *
- * This function appends `add` characters with a predefined pattern
- * to the end of `v`, ensuring the vector reaches the required length.
- *
- * @param v   The vector to be extended.
- * @param add The number of characters to add.
- */
-void fill_vector(std::vector<char>& v, int add, int block) {
-    v.reserve(v.size() + add);
+
+char* fill_array(const char* data, int dataSize, int add, int block) {
+    char* newData = new char[dataSize + add]; // Create a new array
+    std::memcpy(newData, data, dataSize); // Copy original data
+
     for (int i = 0; i < add; ++i) {
-        v.emplace_back(static_cast<char>(whitening(block + i, i)));
+        newData[dataSize + i] = static_cast<char>(whitening(block + i, i));
     }
+
+    return newData;
 }
+

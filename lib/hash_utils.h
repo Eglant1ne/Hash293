@@ -1,7 +1,8 @@
 #ifndef HASH_UTILS_H
 #define HASH_UTILS_H
 
-#include <vector>
+#include <cstring>
+
 
 /**
  * @brief Performs a left rotate (circular shift left) on an integer.
@@ -37,14 +38,17 @@ constexpr int whitening(int x, int index) {
 
 
 /**
- * @brief Fills a character vector with additional padding.
+ * @brief Fills a character array with additional padding.
  *
  * This function appends `add` characters with a predefined pattern
- * to the end of `v`, ensuring the vector reaches the required length.
+ * to the end of `data`, ensuring the array reaches the required length.
  *
  * @param v   The vector to be extended.
+ * @param dataSize  The current size of the array.
  * @param add The number of characters to add.
+ * @param block     A value used for padding calculation.
+ * @return A new dynamically allocated array with the extended data.
  */
-void fill_vector(std::vector<char>& v, int add, int block);
+char* fill_array(const char* data, int dataSize, int add, int block);
 
 #endif // HASH_UTILS_H

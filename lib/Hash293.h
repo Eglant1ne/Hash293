@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "hash_utils.h"
+#include <cstdint>
 #include <iomanip>
 #include <sstream>
 #include <utility>
@@ -21,16 +22,17 @@ public:
      * @brief Calculates a hash value for the given data.
      *
      * @param data A vector of characters representing the input data.
+     * @param dataSize Size of data.
      * @return a vector of characters
      */
-    static std::vector<char> hash293(std::vector<char>& data);
+    static char* hash293(const char* data, uint32_t dataSize);
     /**
      * @brief Convert data to string.
      *
      * @param data A vector of characters.
      * @return data vector to string.
      */
-    static std::string toString(std::vector<char>& data);
+    static std::string toString(const char* data) ;
 };
 
 #endif // HASH293_H
