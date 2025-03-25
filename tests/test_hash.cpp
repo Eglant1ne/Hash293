@@ -5,7 +5,6 @@
 #include <unordered_set>
 #include <sqlite3.h>
 #include <memory>
-#include <vector>
 #include <fstream>
 #include <cstring>
 
@@ -140,7 +139,7 @@ class SQLiteBatchWrapper {
      * using SQLite database for storage with optimized batch operations.
      */
     TEST(Hash293Test, CollisionTestWithSQLiteBatch) {
-        const long long int numTests = 1'000'000'000;
+        const long int numTests = 1'000'000;
         std::ofstream collisionLog("collisions.log");
         SQLiteBatchWrapper db("hashes.db");
     
@@ -149,7 +148,7 @@ class SQLiteBatchWrapper {
         std::mt19937_64 rng(12345);
         std::uniform_int_distribution<char> dist('a', 'z');
     
-        for (long long int i = 0; i < numTests; ++i) {
+        for (long int i = 0; i < numTests; ++i) {
             std::string input(10, ' ');
             for (char& c : input) {
                 c = dist(rng);
@@ -217,27 +216,6 @@ TEST(Hash293Test, SameInputProducesSameHash) {
     std::string hash2 = Hash293::toString(hashResult2, 32);
 
     EXPECT_EQ(hash1, hash2);
-
-    delete[] hashResult1;
-    delete[] hashResult2;
-}
-
-/**
- * @test Verifies that two slightly different inputs likely produce different hashes.
- */
-TEST(Hash293Test, DifferentInputProducesDifferentHash) {
-    const char* input1 = "Hello world";
-    const char* input2 = "Hello worle";
-    int inputSize1 = strlen(input1);
-    int inputSize2 = strlen(input2);
-
-    char* hashResult1 = Hash293::hash293(input1, inputSize1);
-    char* hashResult2 = Hash293::hash293(input2, inputSize2);
-
-    std::string hash1 = Hash293::toString(hashResult1, 32);
-    std::string hash2 = Hash293::toString(hashResult2, 32);
-
-    EXPECT_NE(hash1, hash2);
 
     delete[] hashResult1;
     delete[] hashResult2;

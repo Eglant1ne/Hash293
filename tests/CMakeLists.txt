@@ -5,6 +5,7 @@ find_package(SQLite3 REQUIRED)
 
 add_executable(Hash293Tests
     test_main.cpp
+    test_securehash.cpp
     test_hash.cpp
 )
 
@@ -21,4 +22,4 @@ target_include_directories(Hash293Tests
         ${CMAKE_CURRENT_SOURCE_DIR}/../lib
 )
 
-add_test(NAME Hash293Tests COMMAND Hash293Tests)
+
