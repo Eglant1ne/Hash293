@@ -1,11 +1,6 @@
 #include "Hash293.h"
 
 
-#include "Hash293.h"
-#include <sstream>
-#include <iomanip>
-#include <cstring>
-
 constexpr int HASH_SIZE = 32;
 
 char* Hash293::hash293(const char* data, uint32_t dataSize) {

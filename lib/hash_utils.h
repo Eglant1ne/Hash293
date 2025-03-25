@@ -51,4 +51,4 @@ constexpr int whitening(int x, int index) {
  */
 char* fill_array(const char* data, int dataSize, int add, int block);
 
-#endif // HASH_UTILS_H
+#endif
