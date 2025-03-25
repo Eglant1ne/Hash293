@@ -1,6 +1,7 @@
 # tests/CMakeLists.txt
 
 find_package(GTest REQUIRED)
+find_package(SQLite3 REQUIRED)
 
 add_executable(Hash293Tests
     test_main.cpp
@@ -10,6 +11,7 @@ add_executable(Hash293Tests
 target_link_libraries(Hash293Tests
     PRIVATE
         Hash293Lib
+        SQLite::SQLite3
         GTest::GTest
         GTest::Main
 )
