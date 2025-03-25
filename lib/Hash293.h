@@ -38,10 +38,10 @@ class Hash293 {
          * @return Hexadecimal string representation of the hash.
          */
         static std::string toString(const char* hash, uint32_t hashSize);
-    
+
     private:
         static char* fill_array(const char* data, int dataSize, int add, int block);
-        static constexpr int rotl(int value, int shift);
+        static constexpr uint32_t rotl(uint32_t value, int shift);
         static constexpr int whitening(int x, int index);
     };
     

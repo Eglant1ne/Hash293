@@ -22,4 +22,3 @@ target_include_directories(Hash293Tests
         ${CMAKE_CURRENT_SOURCE_DIR}/../lib
 )
 
-

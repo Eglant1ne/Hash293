@@ -6,7 +6,7 @@
  * @brief Entry point for the Hash293App application.
  */
 int main() {
-    const char* data = "something";
+    const char* data = "ASDGWKGWEJGWGWJGWJGWEGHWGPIEWHGWHIGWIPIWIGHHIGWIGPIEWIHGHIGEWIHPGIWE";
     int dataSize = strlen(data);
 
     char* hash = Hash293::hash293(data, dataSize);

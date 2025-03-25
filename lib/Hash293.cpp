@@ -1,23 +1,22 @@
 #include "Hash293.h"
-
+#include <iostream>
 
 constexpr int HASH_SIZE = 32;
 
 char* Hash293::hash293(const char* data, uint32_t dataSize) {
-    int len = dataSize;
     int minSize = HASH_SIZE;
-    while (minSize < len) {
+    while (minSize < dataSize) {
         minSize <<= 1;
     }
 
-    int add = minSize - len;
+    int add = minSize - dataSize;
     int block = 0;
-    for (int i = 0; i < len; ++i) {
+    for (int i = 0; i < dataSize; ++i) {
         block += data[i];
     }
 
-    char* paddedData = fill_array(data, len, add, block);
-    int paddedSize = len + add;
+    char* paddedData = fill_array(data, dataSize, add, block);
+    int paddedSize = dataSize + add;
 
     int* prev = new int[paddedSize];
     for (int i = 0; i < paddedSize; ++i) {
@@ -42,16 +41,11 @@ char* Hash293::hash293(const char* data, uint32_t dataSize) {
 
     char* hashArr = new char[HASH_SIZE];
     for (int i = 0; i < HASH_SIZE; ++i) {
-        int mixed = whitening((prev[i] * 41) ^ (i * 29) ^ (i << 5), i);
-        hashArr[i] = static_cast<char>(mixed);
+        hashArr[i] = static_cast<char>(whitening((prev[i] * 41) ^ (i * 29) ^ (i << 5), i));
+        hashArr[i] = static_cast<char>(whitening(static_cast<unsigned char>(hashArr[i]) + i, i));
     }
 
     delete[] prev;
-
-    for (int i = 0; i < HASH_SIZE; ++i) {
-        int tmp = static_cast<unsigned char>(hashArr[i]);
-        hashArr[i] = static_cast<char>(whitening(tmp + i, i));
-    }
 
     return hashArr;
 }
@@ -60,9 +54,7 @@ char* Hash293::hash293_secure(const char* data, uint32_t dataSize, uint32_t iter
     char* hash = hash293(data, dataSize);
 
     for (uint32_t i = 0; i < iterations; ++i) {
-        char* tempHash = hash293(hash, HASH_SIZE);
-        delete[] hash;
-        hash = tempHash;
+        hash = hash293(hash, HASH_SIZE);
     }
 
     return hash;
@@ -88,7 +80,7 @@ char* Hash293::fill_array(const char* data, int dataSize, int add, int block) {
     return newData;
 }
 
-constexpr int Hash293::rotl(int value, int shift) {
+constexpr uint32_t Hash293::rotl(uint32_t value, int shift) {
     return (value << shift) | (value >> (32 - shift));
 }
 

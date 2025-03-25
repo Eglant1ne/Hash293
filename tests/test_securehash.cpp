@@ -8,7 +8,7 @@
 #include <fstream>
 #include <cstring>
 
-constexpr int iter = 10000;
+constexpr int iter = 600000;
 
 TEST(SecureHash293Test, BasicHash) {
     const char* input = "Hello";
