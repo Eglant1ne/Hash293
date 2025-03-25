@@ -156,7 +156,7 @@ class SQLiteBatchWrapper {
             }
     
             char* hashResult = Hash293::hash293(input.c_str(), input.size());
-            std::string hashStr = Hash293::toString(hashResult);
+            std::string hashStr = Hash293::toString(hashResult, 32);
             delete[] hashResult;
     
             std::string existing_input = db.find_collision(hashStr);
@@ -213,8 +213,8 @@ TEST(Hash293Test, SameInputProducesSameHash) {
     char* hashResult1 = Hash293::hash293(input, inputSize);
     char* hashResult2 = Hash293::hash293(input, inputSize);
 
-    std::string hash1 = Hash293::toString(hashResult1);
-    std::string hash2 = Hash293::toString(hashResult2);
+    std::string hash1 = Hash293::toString(hashResult1, 32);
+    std::string hash2 = Hash293::toString(hashResult2, 32);
 
     EXPECT_EQ(hash1, hash2);
 
@@ -234,8 +234,8 @@ TEST(Hash293Test, DifferentInputProducesDifferentHash) {
     char* hashResult1 = Hash293::hash293(input1, inputSize1);
     char* hashResult2 = Hash293::hash293(input2, inputSize2);
 
-    std::string hash1 = Hash293::toString(hashResult1);
-    std::string hash2 = Hash293::toString(hashResult2);
+    std::string hash1 = Hash293::toString(hashResult1, 32);
+    std::string hash2 = Hash293::toString(hashResult2, 32);
 
     EXPECT_NE(hash1, hash2);
 
@@ -254,7 +254,7 @@ TEST(Hash293Test, LargeInput) {
     char* hashResult = Hash293::hash293(bigData, largeSize);
     std::string hashString;
 
-    ASSERT_NO_THROW(hashString = Hash293::toString(hashResult));
+    ASSERT_NO_THROW(hashString = Hash293::toString(hashResult, 32));
     EXPECT_FALSE(hashString.empty());
 
     delete[] bigData;

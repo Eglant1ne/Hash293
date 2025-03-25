@@ -1,7 +1,6 @@
 #ifndef HASH293_H
 #define HASH293_H
 
-#include <vector>
 #include <string>
 #include "hash_utils.h"
 #include <cstdint>
@@ -11,28 +10,39 @@
 
 /**
  * @class Hash293
- * @brief A class providing the main hashing interface.
- *
- * The Hash293 class implements a custom hashing algorithm
- * using a combination of data padding, compression, and bit-mixing.
+ * @brief Implements a custom hashing algorithm with a fast and secure (Key-Stretching) variant.
  */
 class Hash293 {
-public:
-    /**
-     * @brief Calculates a hash value for the given data.
-     *
-     * @param data A vector of characters representing the input data.
-     * @param dataSize Size of data.
-     * @return a vector of characters
-     */
-    static char* hash293(const char* data, uint32_t dataSize);
-    /**
-     * @brief Convert data to string.
-     *
-     * @param data A vector of characters.
-     * @return data vector to string.
-     */
-    static std::string toString(const char* data) ;
-};
-
-#endif // HASH293_H
+    public:
+        /**
+         * @brief Computes the hash of the input data (fast version).
+         * @param data Input data.
+         * @param dataSize Size of the input data.
+         * @return Pointer to a dynamically allocated hash array (caller must free it).
+         */
+        static char* hash293(const char* data, uint32_t dataSize);
+    
+        /**
+         * @brief Computes a more secure hash using Key-Stretching.
+         * @param data Input data.
+         * @param dataSize Size of the input data.
+         * @param iterations Number of additional iterations for key strengthening.
+         * @return Pointer to a dynamically allocated hash array (caller must free it).
+         */
+        static char* hash293_secure(const char* data, uint32_t dataSize, uint32_t iterations);
+    
+        /**
+         * @brief Converts a hash array to a hex string representation.
+         * @param hash Pointer to hash data.
+         * @param hashSize Size of the hash.
+         * @return Hexadecimal string representation of the hash.
+         */
+        static std::string toString(const char* hash, uint32_t hashSize);
+    
+    private:
+        static char* fill_array(const char* data, int dataSize, int add, int block);
+        static constexpr int rotl(int value, int shift);
+        static constexpr int whitening(int x, int index);
+    };
+    
+#endif
