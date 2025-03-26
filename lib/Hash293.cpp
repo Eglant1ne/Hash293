@@ -83,17 +83,6 @@ char* Hash293::hash293_secure(const char* data, size_t dataSize, uint32_t iterat
 }
 
 
-std::string Hash293::to_hexdigit(const char* hash, size_t hashSize) {
-    // Convert the hash to a hexadecimal string
-    std::stringstream result;
-    for (uint32_t i = 0; i < hashSize; ++i) {
-        result << std::hex << std::setw(2) << std::setfill('0')
-               << static_cast<int>(static_cast<unsigned char>(hash[i]));
-    }
-    return result.str();
-}
-
-
 char* Hash293::fill_array(const char* data, size_t dataSize, int add, int block) {
     // Create a new array with padding
     char* newData = new char[dataSize + add];
@@ -131,12 +120,4 @@ std::unique_ptr<char[]> Hash293::generate_salt() {
     randombytes_buf(buffer.get(), length);
     
     return buffer;
-}
-
-
-uint32_t Hash293::random_int() {
-    // Generate a random integer within a specific range (10 to 32)
-    uint8_t r;
-    randombytes(&r, 1);
-    return 10 + (r % 23);
 }

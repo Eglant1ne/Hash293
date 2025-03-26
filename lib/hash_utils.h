@@ -2,53 +2,28 @@
 #define HASH_UTILS_H
 
 #include <cstring>
-
-
-/**
- * @brief Performs a left rotate (circular shift left) on an integer.
- *
- * This function rotates the bits of `value` to the left by `shift` positions.
- * Bits shifted out from the left are wrapped around to the right.
- *
- * @param value The integer xvalue to rotate.
- * @param shift The number of bit positions to shift.
- * @return The result after applying the left rotation.
- */
-constexpr int rotl(int value, int shift) {
-    return (value << shift) | (value >> (32 - shift));
-}
+#include <cstdint>
+#include <sodium.h>
+#include <iomanip>
+#include <string>
 
 /**
- * @brief Applies a whitening transformation to an integer.
- *
- * This function performs a bitwise transformation using multiplication
- * with prime numbers and a left rotation to increase diffusion.
- *
- * @param x The input integer to transform.
- * @param index The index of x
- * @return The transformed integer.
+ * @brief Generates a random integer within a specific range.
+ * 
+ * This function uses a cryptographic random number generator to produce a value
+ * within the range [10, 32].
+ * 
+ * @return A random integer in the range [10, 32].
  */
-constexpr int whitening(int x, int index) {
-    constexpr int prime = 0x45d9f3b;
-    x ^= (x >> 16);  
-    x *= prime;
-    x ^= (x >> 16);
-    return rotl(x + (index * 31), index % 8);
-}
-
+uint32_t random_int();
 
 /**
- * @brief Fills a character array with additional padding.
- *
- * This function appends `add` characters with a predefined pattern
- * to the end of `data`, ensuring the array reaches the required length.
- *
- * @param v   The vector to be extended.
- * @param dataSize  The current size of the array.
- * @param add The number of characters to add.
- * @param block     A value used for padding calculation.
- * @return A new dynamically allocated array with the extended data.
+ * @brief Converts a hash array to a hex string representation.
+ * @param hash Pointer to hash data.
+ * @param hashSize Hash size.
+ * @return Hexadecimal string representation of the hash.
  */
-char* fill_array(const char* data, int dataSize, int add, int block);
+std::string to_hexdigit(const char* hash, size_t hashSize);
+
 
 #endif // HASH_UTILS_H

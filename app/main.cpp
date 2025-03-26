@@ -19,7 +19,7 @@ int main() {
     }
     std::cout << std::endl;
 
-    std::cout << "Hash value size: " << hashValue.size() << std::endl;
+    std::cout << "Hash value size: " << hashValue.size() << " " << sizeof(hashValue) << std::endl;
 
     delete[] hash;
 
