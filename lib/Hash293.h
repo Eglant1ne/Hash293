@@ -5,6 +5,7 @@
 #include "hash_utils.h"
 #include <cstdint>
 #include <iomanip>
+#include <cmath>
 #include <sstream>
 #include <sodium.h>
 #include <memory>
@@ -43,15 +44,58 @@ class Hash293 {
 
         /**
          * @brief Generates salt.
-         * @param length Buffer length.
          * @return Random bytes array.
          */
-         static std::unique_ptr<char[]> generate_salt(size_t length);
+         static std::unique_ptr<char[]> generate_salt();
     
     private:
+        /**
+         * @brief Pads the input data with additional bytes.
+         * 
+         * This function expands the input data to the required size by adding extra bytes,
+         * which are derived from the `block` value and transformed using the whitening function.
+         * 
+         * @param data The original input data.
+         * @param dataSize The size of the input data.
+         * @param add The number of additional bytes to be appended.
+         * @param block A computed value used to generate padding.
+         * @return A new dynamically allocated array containing the padded data.
+         */
         static char* fill_array(const char* data, size_t dataSize, int add, int block);
-        static constexpr int rotl(int value, int shift);
-        static constexpr int whitening(int x, int index);
+
+        /**
+         * @brief Performs a left rotation on a 32-bit integer.
+         * 
+         * This function rotates the bits of `value` to the left by `shift` positions,
+         * ensuring that overflowed bits wrap around to the right side.
+         * 
+         * @param value The integer value to be rotated.
+         * @param shift The number of bits to rotate.
+         * @return The rotated integer.
+         */
+        static constexpr uint32_t rotl(uint32_t value, uint32_t shift);
+
+        /**
+         * @brief Applies a whitening transformation to an integer.
+         * 
+         * This function performs a series of bitwise operations and multiplications to
+         * introduce diffusion and improve randomness in the hashing process.
+         * 
+         * @param x The input integer to be whitened.
+         * @param index The index used to further alter the transformation.
+         * @return The transformed integer.
+         */
+        static constexpr uint32_t whitening(uint32_t x, uint32_t index);
+
+        /**
+         * @brief Generates a random integer within a specific range.
+         * 
+         * This function uses a cryptographic random number generator to produce a value
+         * within the range [10, 32].
+         * 
+         * @return A random integer in the range [10, 32].
+         */
+        static uint32_t random_int();
     };
     
 #endif
