@@ -6,6 +6,8 @@
 #include <cstdint>
 #include <iomanip>
 #include <sstream>
+#include <sodium.h>
+#include <memory>
 #include <utility>
 
 /**
@@ -20,7 +22,7 @@ class Hash293 {
          * @param dataSize Size of the input data.
          * @return Pointer to a dynamically allocated hash array (caller must free it).
          */
-        static char* hash293(const char* data, uint32_t dataSize);
+        static char* hash293(const char* data, size_t dataSize);
     
         /**
          * @brief Computes a more secure hash using Key-Stretching.
@@ -29,23 +31,25 @@ class Hash293 {
          * @param iterations Number of additional iterations for key strengthening.
          * @return Pointer to a dynamically allocated hash array (caller must free it).
          */
-        static char* hash293_secure(const char* data, uint32_t dataSize, uint32_t iterations);
+        static char* hash293_secure(const char* data, size_t dataSize, uint32_t iterations);
     
         /**
          * @brief Converts a hash array to a hex string representation.
          * @param hash Pointer to hash data.
-         * @param hashSize Size of the hash.
+         * @param hashSize Hash size.
          * @return Hexadecimal string representation of the hash.
          */
-        static std::string to_hexdigit(const char* hash, uint32_t hashSize);
+        static std::string to_hexdigit(const char* hash, size_t hashSize);
 
         /**
          * @brief Generates salt.
-         * @
+         * @param length Buffer length.
+         * @return Random bytes array.
          */
+         static std::unique_ptr<char[]> generate_salt(size_t length);
     
     private:
-        static char* fill_array(const char* data, int dataSize, int add, int block);
+        static char* fill_array(const char* data, size_t dataSize, int add, int block);
         static constexpr int rotl(int value, int shift);
         static constexpr int whitening(int x, int index);
     };

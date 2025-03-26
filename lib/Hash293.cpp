@@ -1,14 +1,12 @@
 #include "Hash293.h"
 
-
-#include "Hash293.h"
 #include <sstream>
 #include <iomanip>
 #include <cstring>
 
-constexpr int HASH_SIZE = 32;
+constexpr int HASH_SIZE = 64;
 
-char* Hash293::hash293(const char* data, uint32_t dataSize) {
+char* Hash293::hash293(const char* data, size_t dataSize) {
     int len = dataSize;
     int minSize = HASH_SIZE;
     while (minSize < len) {
@@ -61,7 +59,7 @@ char* Hash293::hash293(const char* data, uint32_t dataSize) {
     return hashArr;
 }
 
-char* Hash293::hash293_secure(const char* data, uint32_t dataSize, uint32_t iterations) {
+char* Hash293::hash293_secure(const char* data, size_t dataSize, uint32_t iterations) {
     char* hash = hash293(data, dataSize);
 
     for (uint32_t i = 0; i < iterations; ++i) {
@@ -73,7 +71,7 @@ char* Hash293::hash293_secure(const char* data, uint32_t dataSize, uint32_t iter
     return hash;
 }
 
-std::string Hash293::to_hexdigit(const char* hash, uint32_t hashSize) {
+std::string Hash293::to_hexdigit(const char* hash, size_t hashSize) {
     std::stringstream result;
     for (uint32_t i = 0; i < hashSize; ++i) {
         result << std::hex << std::setw(2) << std::setfill('0')
@@ -82,7 +80,7 @@ std::string Hash293::to_hexdigit(const char* hash, uint32_t hashSize) {
     return result.str();
 }
 
-char* Hash293::fill_array(const char* data, int dataSize, int add, int block) {
+char* Hash293::fill_array(const char* data, size_t dataSize, int add, int block) {
     char* newData = new char[dataSize + add];
     std::memcpy(newData, data, dataSize);
 
@@ -103,4 +101,15 @@ constexpr int Hash293::whitening(int x, int index) {
     x *= prime;
     x ^= (x >> 16);
     return rotl(x + (index * 31), index % 8);
+}
+
+
+std::unique_ptr<char[]> Hash293::generate_salt(size_t length) {
+    if (length == 0) 
+        throw std::invalid_argument("Salt length must be greater than 0");
+
+    auto buffer = std::make_unique<char[]>(length);
+    randombytes_buf(buffer.get(), length);
+    
+    return buffer;
 }

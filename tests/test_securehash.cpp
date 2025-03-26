@@ -37,8 +37,8 @@ TEST(SecureHash293Test, SameInputProducesSameHash) {
     char* hashResult1 = Hash293::hash293_secure(input, inputSize, iter);
     char* hashResult2 = Hash293::hash293_secure(input, inputSize, iter);
 
-    std::string hash1 = Hash293::toString(hashResult1, 32);
-    std::string hash2 = Hash293::toString(hashResult2, 32);
+    std::string hash1 = Hash293::to_hexdigit(hashResult1, 32);
+    std::string hash2 = Hash293::to_hexdigit(hashResult2, 32);
 
     EXPECT_EQ(hash1, hash2);
 
@@ -54,7 +54,7 @@ TEST(SecureHash293Test, LargeInput) {
     char* hashResult = Hash293::hash293_secure(bigData, largeSize, iter);
     std::string hashString;
 
-    ASSERT_NO_THROW(hashString = Hash293::toString(hashResult, 32));
+    ASSERT_NO_THROW(hashString = Hash293::to_hexdigit(hashResult, 32));
     EXPECT_FALSE(hashString.empty());
 
     delete[] bigData;
