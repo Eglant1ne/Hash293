@@ -8,15 +8,6 @@
 #include <iomanip>
 #include <string>
 
-/**
- * @brief Generates a random integer within a specific range.
- * 
- * This function uses a cryptographic random number generator to produce a value
- * within the range [10, 32].
- * 
- * @return A random integer in the range [10, 32].
- */
-uint32_t random_int();
 
 /**
  * @brief Converts a hash array to a hex string representation.
@@ -26,7 +17,10 @@ uint32_t random_int();
  */
 std::string to_hexdigit(const char* hash, size_t hashSize);
 
-
+/**
+ * @brief Converts salt to string.
+ * @return Salt string.
+ */
 std::string generate_salt_string();
 
 #endif
