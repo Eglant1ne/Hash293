@@ -20,6 +20,16 @@ TEST(SecureHash293Test, VerifyHash) {
 
 }
 
+TEST(SecureHash293Test, SameInputDiffSalt) {
+    const char* data = "something";
+    int dataSize = strlen(data);
+
+    std::string hash = Hash293::generate_hash293(data, dataSize, iter);
+    std::string hash2 = Hash293::generate_hash293(data, dataSize, iter);
+    EXPECT_TRUE(hash != hash2);
+
+}
+
 
 TEST(SecureHash293Test, EmptyInput) {
     const char* input = "";
