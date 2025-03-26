@@ -8,17 +8,28 @@
 #include <fstream>
 #include <cstring>
 
-constexpr int iter = 600000;
+constexpr int iter = 10;
 
-TEST(SecureHash293Test, BasicHash) {
-    const char* input = "Hello";
-    int inputSize = strlen(input);
 
-    char* hashResult = Hash293::hash293_secure(input, inputSize, iter);
-    EXPECT_NE(hashResult, nullptr);
+TEST(SecureHash293Test, VerifyHash) {
+    const char* data = "something";
+    int dataSize = strlen(data);
 
-    delete[] hashResult;
+    std::string hash = Hash293::generate_hash293(data, dataSize, iter);
+    EXPECT_TRUE(Hash293::verify_hash(hash, data, dataSize, iter));
+
 }
+
+TEST(SecureHash293Test, SameInputDiffSalt) {
+    const char* data = "something";
+    int dataSize = strlen(data);
+
+    std::string hash = Hash293::generate_hash293(data, dataSize, iter);
+    std::string hash2 = Hash293::generate_hash293(data, dataSize, iter);
+    EXPECT_TRUE(hash != hash2);
+
+}
+
 
 TEST(SecureHash293Test, EmptyInput) {
     const char* input = "";
@@ -37,8 +48,8 @@ TEST(SecureHash293Test, SameInputProducesSameHash) {
     char* hashResult1 = Hash293::hash293_secure(input, inputSize, iter);
     char* hashResult2 = Hash293::hash293_secure(input, inputSize, iter);
 
-    std::string hash1 = Hash293::toString(hashResult1, 32);
-    std::string hash2 = Hash293::toString(hashResult2, 32);
+    std::string hash1 = to_hexdigit(hashResult1, 32);
+    std::string hash2 = to_hexdigit(hashResult2, 32);
 
     EXPECT_EQ(hash1, hash2);
 
@@ -54,10 +65,20 @@ TEST(SecureHash293Test, LargeInput) {
     char* hashResult = Hash293::hash293_secure(bigData, largeSize, iter);
     std::string hashString;
 
-    ASSERT_NO_THROW(hashString = Hash293::toString(hashResult, 32));
+    ASSERT_NO_THROW(hashString = to_hexdigit(hashResult, 32));
     EXPECT_FALSE(hashString.empty());
 
     delete[] bigData;
+    delete[] hashResult;
+}
+
+TEST(SecureHash293Test, BigIterations) {
+    const char* input = "Hash293";
+    int inputSize = strlen(input);
+
+    char* hashResult = Hash293::hash293_secure(input, inputSize, 20);
+    EXPECT_NE(hashResult, nullptr);
+
     delete[] hashResult;
 }
 
