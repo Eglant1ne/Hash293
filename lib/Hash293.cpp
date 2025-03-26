@@ -73,7 +73,7 @@ char* Hash293::hash293_secure(const char* data, uint32_t dataSize, uint32_t iter
     return hash;
 }
 
-std::string Hash293::toString(const char* hash, uint32_t hashSize) {
+std::string Hash293::to_hexdigit(const char* hash, uint32_t hashSize) {
     std::stringstream result;
     for (uint32_t i = 0; i < hashSize; ++i) {
         result << std::hex << std::setw(2) << std::setfill('0')

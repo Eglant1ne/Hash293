@@ -37,7 +37,12 @@ class Hash293 {
          * @param hashSize Size of the hash.
          * @return Hexadecimal string representation of the hash.
          */
-        static std::string toString(const char* hash, uint32_t hashSize);
+        static std::string to_hexdigit(const char* hash, uint32_t hashSize);
+
+        /**
+         * @brief Generates salt.
+         * @
+         */
     
     private:
         static char* fill_array(const char* data, int dataSize, int add, int block);

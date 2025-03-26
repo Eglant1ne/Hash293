@@ -11,7 +11,7 @@ int main() {
 
     char* hash = Hash293::hash293(data, dataSize);
 
-    std::string hashValue = Hash293::toString(hash, 32); 
+    std::string hashValue = Hash293::to_hexdigit(hash, 32); 
 
     std::cout << "Hash result (hex): ";
     for (char c : hashValue) {
