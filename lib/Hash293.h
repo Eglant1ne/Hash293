@@ -17,6 +17,26 @@
  */
 class Hash293 {
     public:
+        /** 
+         * @brief Generates a hash with salt.
+         * @param data Input data.
+         * @param dataSize Size of the input data.
+         * @param iterations Number of additional iterations for key strengthening (optional).
+         * @return Hash string. 
+         * 
+        */
+        static std::string generate_hash293(const char* data, size_t dataSize, uint32_t iterations);
+
+        /** 
+         * @brief Verifies hash.
+         * @param stored Saved hash using function generate_hash293.
+         * @param input Input data.
+         * @param inputSize Size of the input data.
+         * @param iterations Number of additional iterations for key strengthening (optional). 
+         * When using the function, the number of iterations must be equal to.
+        */
+        static bool verify_hash(std::string stored, const char* input, size_t inputSize, uint32_t iterations);
+
         /**
          * @brief Computes the hash of the input data (fast version).
          * @param data Input data.
@@ -33,14 +53,6 @@ class Hash293 {
          * @return Pointer to a dynamically allocated hash array (caller must free it).
          */
         static char* hash293_secure(const char* data, size_t dataSize, uint32_t iterations);
-    
-        /**
-         * @brief Converts a hash array to a hex string representation.
-         * @param hash Pointer to hash data.
-         * @param hashSize Hash size.
-         * @return Hexadecimal string representation of the hash.
-         */
-        static std::string to_hexdigit(const char* hash, size_t hashSize);
 
         /**
          * @brief Generates salt.
@@ -61,7 +73,7 @@ class Hash293 {
          * @param block A computed value used to generate padding.
          * @return A new dynamically allocated array containing the padded data.
          */
-        static char* fill_array(const char* data, size_t dataSize, int add, int block);
+        static char* fill_array(const char* data, size_t dataSize, uint32_t add, uint32_t block);
 
         /**
          * @brief Performs a left rotation on a 32-bit integer.
@@ -86,16 +98,6 @@ class Hash293 {
          * @return The transformed integer.
          */
         static constexpr uint32_t whitening(uint32_t x, uint32_t index);
-
-        /**
-         * @brief Generates a random integer within a specific range.
-         * 
-         * This function uses a cryptographic random number generator to produce a value
-         * within the range [10, 32].
-         * 
-         * @return A random integer in the range [10, 32].
-         */
-        static uint32_t random_int();
     };
     
 #endif

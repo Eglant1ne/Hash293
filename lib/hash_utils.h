@@ -3,6 +3,7 @@
 
 #include <cstring>
 #include <cstdint>
+#include "Hash293.h"
 #include <sodium.h>
 #include <iomanip>
 #include <string>
@@ -25,5 +26,7 @@ uint32_t random_int();
  */
 std::string to_hexdigit(const char* hash, size_t hashSize);
 
+
+std::string generate_salt_string();
 
 #endif // HASH_UTILS_H

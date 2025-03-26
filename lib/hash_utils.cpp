@@ -1,15 +1,6 @@
 #include "hash_utils.h"
 
 
-
-uint32_t random_int() {
-    // Generate a random integer within a specific range (10 to 32)
-    uint8_t r;
-    randombytes(&r, 1);
-    return 10 + (r % 23);
-}
-
-
 std::string to_hexdigit(const char* data, size_t hashSize) {
     // Convert the data to a hexadecimal string
     std::stringstream result;
@@ -18,4 +9,9 @@ std::string to_hexdigit(const char* data, size_t hashSize) {
                << static_cast<int>(static_cast<unsigned char>(data[i]));
     }
     return result.str();
+}
+
+std::string generate_salt_string() {
+    auto salt = Hash293::generate_salt();
+    return to_hexdigit(salt.get(), 16);
 }
