@@ -34,7 +34,11 @@ bool Hash293::verify_hash(std::string stored, const char* input, size_t inputSiz
     delete[] hash;  // Clean up dynamic allocation
 
     // Compare the computed hash with the stored expected hash
-    return computedHash == expectedHash;
+    bool sameHashes = true;
+    for(uint32_t i = 0; i < 64; ++i) {
+        if (computedHash[i] != expectedHash[i]) sameHashes = false;
+    }
+    return sameHashes;
 }
 
 

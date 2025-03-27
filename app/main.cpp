@@ -10,5 +10,6 @@ int main() {
     int dataSize = strlen(data);
 
     std::string hash = Hash293::generate_hash293(data, dataSize, 4);
+    std::cout << Hash293::verify_hash(hash, data, dataSize, 4);
     return 0;
 }
