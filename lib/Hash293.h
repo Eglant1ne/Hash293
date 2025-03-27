@@ -6,7 +6,6 @@
 #include "hash_utils.h"
 #include <cstdint>
 #include <iomanip>
-#include <cmath>
 #include <sstream>
 #include <sodium.h>
 #include <memory>

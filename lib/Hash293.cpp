@@ -71,7 +71,7 @@ char* Hash293::hash293_secure(const char* data, size_t dataSize, uint32_t iterat
     char* hash = hash293(data, dataSize);
 
     // Apply key-stretching with multiple iterations
-    iterations = pow(2, iterations);
+    iterations = (1 << iterations);
     for (uint32_t i = 0; i < iterations; ++i) {
         char* tempHash = hash293(hash, HASH_SIZE);
         delete[] hash; // Free previous hash
