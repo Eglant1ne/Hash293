@@ -19,7 +19,7 @@
 class Hash293 {
     public:
         /** 
-         * @brief Generates a hash with salt.
+         * @brief Generates a password using hash function and salt.
          * @param data Input data.
          * @param dataSize Size of the input data.
          * @param iterations Number of additional iterations for key strengthening (optional).
@@ -29,7 +29,7 @@ class Hash293 {
         static std::string generate_hash293pw(const char* data, size_t dataSize, uint32_t iterations = 0, std::string salt = "");
 
         /** 
-         * @brief Verifies hash.
+         * @brief Verifies password.
          * @param stored Saved hash using function generate_hash293.
          * @param input Input data.
          * @param inputSize Size of the input data.

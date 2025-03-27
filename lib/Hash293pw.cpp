@@ -1,26 +1,33 @@
 #include "Hash293.h"
 
 std::string Hash293::generate_hash293pw(const char* data, size_t dataSize, uint32_t iterations, std::string salt) {
+    // If no salt provided, generate a random one
     if (salt.empty()) salt = generate_salt_string();
     
+    // Combine salt with the input data
     std::string dataWithSalt = salt + std::string(data, dataSize);
-    std::string algo;
-    char* hash;
+    std::string algo;  // Will store the algorithm identifier
+    char* hash;        // Pointer to store the generated hash
 
+    // Choose between simple or secure hashing based on iteration count
     if (iterations < 2) {
+        // Use basic hash293 for fast but less secure hashing
         hash = Hash293::hash293(dataWithSalt.c_str(), dataWithSalt.size());
-        algo = "hash293d";
+        algo = "hash293d";  // 'd' for default
     } else {
+        // Use secure version with multiple iterations for stronger hashing
         hash = Hash293::hash293_secure(dataWithSalt.c_str(), dataWithSalt.size(), iterations);
-        algo = "hash293s";
+        algo = "hash293s";  // 's' for secure
     }
 
     std::string iter = std::to_string(iterations);
+    // Create final hash string in the specified format
     std::string finalHash = algo + "#" + iter + "#" + salt + "#" + to_hexdigit(hash, HASH_SIZE);
 
     delete[] hash;
     return finalHash;
 }
+
 
 
 bool Hash293::verify_hash293pw(const std::string& stored, const char* input, size_t inputSize) {
