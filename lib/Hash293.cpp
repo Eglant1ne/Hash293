@@ -4,6 +4,7 @@ constexpr int HASH_SIZE = 32;
 
 
 std::string Hash293::generate_hash293(const char* data, size_t dataSize, uint32_t iterations) {
+    // Generate a random salt.
     std::string salt = generate_salt_string();
     std::string dataWithSalt = salt + std::string(data, dataSize);
 
