@@ -2,6 +2,7 @@
 
 add_library(Hash293Lib STATIC
     Hash293.cpp
+    Hash293pw.cpp
     hash_utils.cpp
 )
 

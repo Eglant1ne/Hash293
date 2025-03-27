@@ -15,8 +15,8 @@ TEST(SecureHash293Test, VerifyHash) {
     const char* data = "something";
     int dataSize = strlen(data);
 
-    std::string hash = Hash293::generate_hash293(data, dataSize, iter);
-    EXPECT_TRUE(Hash293::verify_hash(hash, data, dataSize, iter));
+    std::string hash = Hash293::generate_hash293pw(data, dataSize, iter);
+    EXPECT_TRUE(Hash293::verify_hash293pw(hash, data, dataSize));
 
 }
 
@@ -24,8 +24,8 @@ TEST(SecureHash293Test, SameInputDiffSalt) {
     const char* data = "something";
     int dataSize = strlen(data);
 
-    std::string hash = Hash293::generate_hash293(data, dataSize, iter);
-    std::string hash2 = Hash293::generate_hash293(data, dataSize, iter);
+    std::string hash = Hash293::generate_hash293pw(data, dataSize, iter);
+    std::string hash2 = Hash293::generate_hash293pw(data, dataSize, iter);
     EXPECT_TRUE(hash != hash2);
 
 }

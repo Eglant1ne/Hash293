@@ -1,47 +1,5 @@
 #include "Hash293.h"
 
-constexpr int HASH_SIZE = 32;
-
-
-std::string Hash293::generate_hash293(const char* data, size_t dataSize, uint32_t iterations) {
-    // Generate a random salt.
-    std::string salt = generate_salt_string();
-    std::string dataWithSalt = salt + std::string(data, dataSize);
-
-    char* hash = Hash293::hash293_secure(dataWithSalt.c_str(), dataWithSalt.size(), iterations);
-    std::string finalHash = salt + "#" + to_hexdigit(hash, HASH_SIZE);
-
-    delete[] hash;
-
-    return finalHash;
-}
-
-
-bool Hash293::verify_hash(std::string stored, const char* input, size_t inputSize, uint32_t iterations) {
-    // Find the separator between salt and hash in the stored string
-    size_t pos = stored.find('#');
-    if (pos == std::string::npos) return false;  // Invalid format if separator not found
-
-    // Extract salt and expected hash from stored string
-    std::string salt = stored.substr(0, pos);
-    std::string expectedHash = stored.substr(pos + 1);
-
-    // Combine the extracted salt with the input data
-    std::string inputWithSalt = salt + std::string(input, inputSize);
-    
-    // Generate hash for verification using same parameters
-    char* hash = hash293_secure(inputWithSalt.c_str(), inputWithSalt.size(), iterations);
-    std::string computedHash = to_hexdigit(hash, HASH_SIZE);
-    delete[] hash;  // Clean up dynamic allocation
-
-    // Compare the computed hash with the stored expected hash
-    bool sameHashes = true;
-    for(uint32_t i = 0; i < 64; ++i) {
-        if (computedHash[i] != expectedHash[i]) sameHashes = false;
-    }
-    return sameHashes;
-}
-
 
 char* Hash293::hash293(const char* data, size_t dataSize) {
     // Initialize variables

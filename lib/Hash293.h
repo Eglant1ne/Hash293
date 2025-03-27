@@ -1,5 +1,6 @@
 #ifndef HASH293_H
 #define HASH293_H
+#define HASH_SIZE 32
 
 #include <string>
 #include "hash_utils.h"
@@ -25,7 +26,7 @@ class Hash293 {
          * @return Hash string. 
          * 
         */
-        static std::string generate_hash293(const char* data, size_t dataSize, uint32_t iterations);
+        static std::string generate_hash293pw(const char* data, size_t dataSize, uint32_t iterations = 0, std::string salt = "");
 
         /** 
          * @brief Verifies hash.
@@ -35,7 +36,7 @@ class Hash293 {
          * @param iterations Number of additional iterations for key strengthening (optional). 
          * When using the function, the number of iterations must be equal to.
         */
-        static bool verify_hash(std::string stored, const char* input, size_t inputSize, uint32_t iterations);
+        static bool verify_hash293pw(const std::string& stored, const char* input, size_t inputSize);
 
         /**
          * @brief Computes the hash of the input data (fast version).
