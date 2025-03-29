@@ -18,6 +18,8 @@
 pacman -S mingw-w64-x86_64-gcc
 pacman -S mingw-w64-x86_64-cmake
 pacman -S mingw-w64-x86_64-gtest
+pacman -S mingw-w64-x86_64-libsodium
+pacman -S mingw-w64-x86_64-toolchain
 ```
 
 ## Сборка и запуск
