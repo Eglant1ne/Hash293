@@ -56,8 +56,30 @@ Hash293 можно использовать для:
 ## Документация
 Для удобства работы с кодом каждый файл снабжён детализированной документацией, описывающей основные принципы работы хеш-функции.
 
+```cpp
+#include <iostream>
+#include "Hash293.h"
+
+/**
+ * @brief Entry point for the Hash293App application.
+ * Example of use.
+ */
+int main() {
+    const char* data = "data";
+    int dataSize = strlen(data);
+
+    std::string hash_secure = Hash293::generate_hash293pw(data, dataSize, 4);
+    for(auto c: hash_secure) 
+         std::cout << c;
+    std::cout << std::endl;
+    std::cout << Hash293::verify_hash293pw(hash_secure, data, dataSize) << std::endl;
+
+    return 0;
+}
+```
+
 ## Авторы
 - **Eglant1ne** – разработчик проекта
 
-## Лицензия
+[!NOTE]
 Проект распространяется под лицензией **MIT**.
